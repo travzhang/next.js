@@ -642,6 +642,29 @@ export interface ExperimentalConfig {
   swcPlugins?: Array<[string, Record<string, unknown>]>
 
   /**
+   * Environment variable names to forward into SWC's wasm plugin runtime
+   * via `jsc.experimental.pluginEnvVars`. Plugins that need to read CI or
+   * build-time environment variables at transform time (for example,
+   * instrumentation plugins tagging output with a commit SHA or project ID)
+   * can declare which variables they need here; only names listed will be
+   * passed through, everything else stays inaccessible to the plugin.
+   *
+   * See https://github.com/swc-project/swc/issues/9668 for background.
+   *
+   * @example
+   * ```js
+   * // next.config.js
+   * module.exports = {
+   *   experimental: {
+   *     swcPlugins: [['my-instrumentation-plugin', {}]],
+   *     swcPluginEnvVars: ['CI_COMMIT_SHA', 'CI_PROJECT_ID'],
+   *   },
+   * }
+   * ```
+   */
+  swcPluginEnvVars?: string[]
+
+  /**
    * Additional options for SWC's preset-env (`env` configuration).
    * These are merged into the `env` block that Next.js passes to SWC,
    * alongside the browserslist-derived `targets`.

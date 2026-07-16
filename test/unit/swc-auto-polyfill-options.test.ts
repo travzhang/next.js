@@ -1,4 +1,7 @@
-import { getLoaderSWCOptions } from 'next/dist/build/swc/options'
+import {
+  getJestSWCOptions,
+  getLoaderSWCOptions,
+} from 'next/dist/build/swc/options'
 
 describe('swcEnvOptions', () => {
   const baseArgs = {
@@ -99,5 +102,63 @@ describe('swcEnvOptions', () => {
       node: process.versions.node,
     })
     expect(options.env.mode).toBeUndefined()
+  })
+})
+
+describe('swcPluginEnvVars', () => {
+  const baseArgs = {
+    filename: '/app/page.tsx',
+    development: false,
+    isServer: false,
+    pagesDir: '/pages',
+    appDir: '/app',
+    isPageFile: false,
+    hasReactRefresh: false,
+    modularizeImports: undefined,
+    swcPlugins: undefined,
+    compilerOptions: undefined,
+    jsConfig: {},
+    swcCacheDir: '/tmp/swc',
+    relativeFilePathFromRoot: 'app/page.tsx',
+    serverComponents: false,
+    serverReferenceHashSalt: 'test-salt',
+    bundleLayer: undefined,
+    cacheHandlers: undefined,
+    configDir: '/',
+  }
+
+  it('should pass swcPluginEnvVars to jsc.experimental.pluginEnvVars', () => {
+    const options = getLoaderSWCOptions({
+      ...baseArgs,
+      supportedBrowsers: ['chrome 80'],
+      swcPluginEnvVars: ['CI_COMMIT_SHA', 'CI_PROJECT_ID'],
+    })
+    expect(options.jsc.experimental.pluginEnvVars).toEqual([
+      'CI_COMMIT_SHA',
+      'CI_PROJECT_ID',
+    ])
+  })
+
+  it('should not set pluginEnvVars when swcPluginEnvVars is not configured', () => {
+    const options = getLoaderSWCOptions({
+      ...baseArgs,
+      supportedBrowsers: ['chrome 80'],
+    })
+    expect(options.jsc.experimental.pluginEnvVars).toBeUndefined()
+  })
+
+  it('should pass swcPluginEnvVars through getJestSWCOptions', () => {
+    const options = getJestSWCOptions({
+      isServer: false,
+      filename: '/app/page.tsx',
+      esm: false,
+      modularizeImports: undefined,
+      swcPlugins: undefined,
+      swcPluginEnvVars: ['GITHUB_SHA'],
+      compilerOptions: undefined,
+      jsConfig: {},
+      serverReferenceHashSalt: 'test-salt',
+    })
+    expect(options.jsc.experimental.pluginEnvVars).toEqual(['GITHUB_SHA'])
   })
 })

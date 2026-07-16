@@ -322,6 +322,7 @@ export const experimentalSchema = {
     // The specific swc plugin's option is unknown, use z.any() here
     .array(z.tuple([z.string(), z.record(z.string(), z.any())]))
     .optional(),
+  swcPluginEnvVars: z.array(z.string()).optional(),
   swcEnvOptions: z
     .object({
       mode: z.enum(['usage', 'entry']).optional(),

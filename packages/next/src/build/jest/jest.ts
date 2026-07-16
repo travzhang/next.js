@@ -135,6 +135,7 @@ export default function nextJest(options: { dir?: string } = {}) {
       const jestTransformerConfig: JestTransformerConfig = {
         modularizeImports: nextConfig?.modularizeImports,
         swcPlugins: nextConfig?.experimental?.swcPlugins,
+        swcPluginEnvVars: nextConfig?.experimental?.swcPluginEnvVars,
         compilerOptions: nextConfig?.compiler,
         jsConfig,
         resolvedBaseUrl,

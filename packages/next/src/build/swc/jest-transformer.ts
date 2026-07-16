@@ -48,6 +48,7 @@ export interface JestTransformerConfig extends TransformerConfig {
   isEsmProject: boolean
   modularizeImports?: NextConfig['modularizeImports']
   swcPlugins: ExperimentalConfig['swcPlugins']
+  swcPluginEnvVars?: ExperimentalConfig['swcPluginEnvVars']
   compilerOptions: NextConfig['compiler']
   imageConfig?: Partial<NextConfig['images']>
 }
@@ -98,6 +99,7 @@ const createTransformer: TransformerCreator<
       serverComponents: inputOptions?.serverComponents,
       modularizeImports: inputOptions?.modularizeImports,
       swcPlugins: inputOptions?.swcPlugins,
+      swcPluginEnvVars: inputOptions?.swcPluginEnvVars,
       compilerOptions: inputOptions?.compilerOptions,
       imageConfig: inputOptions?.imageConfig,
       serverReferenceHashSalt: '',

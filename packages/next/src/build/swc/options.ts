@@ -63,6 +63,7 @@ function getBaseSWCOptions({
   configDir,
   modularizeImports,
   swcPlugins,
+  swcPluginEnvVars,
   compilerOptions,
   resolvedBaseUrl,
   jsConfig,
@@ -88,6 +89,7 @@ function getBaseSWCOptions({
   modularizeImports?: NextConfig['modularizeImports']
   compilerOptions: NextConfig['compiler']
   swcPlugins: ExperimentalConfig['swcPlugins']
+  swcPluginEnvVars?: ExperimentalConfig['swcPluginEnvVars']
   resolvedBaseUrl?: ResolvedBaseUrl
   jsConfig: any
   supportedBrowsers: string[] | undefined
@@ -136,6 +138,7 @@ function getBaseSWCOptions({
         keepImportAttributes: true,
         emitAssertForImportAttributes: true,
         plugins,
+        pluginEnvVars: swcPluginEnvVars,
         cacheRoot: swcCacheDir,
       },
       transform: {
@@ -318,6 +321,7 @@ export function getJestSWCOptions({
   modularizeImports,
   configDir,
   swcPlugins,
+  swcPluginEnvVars,
   compilerOptions,
   jsConfig,
   resolvedBaseUrl,
@@ -331,6 +335,7 @@ export function getJestSWCOptions({
   configDir?: string
   modularizeImports?: NextConfig['modularizeImports']
   swcPlugins: ExperimentalConfig['swcPlugins']
+  swcPluginEnvVars?: ExperimentalConfig['swcPluginEnvVars']
   compilerOptions: NextConfig['compiler']
   jsConfig: any
   resolvedBaseUrl?: ResolvedBaseUrl
@@ -348,6 +353,7 @@ export function getJestSWCOptions({
     globalWindow: !isServer,
     modularizeImports,
     swcPlugins,
+    swcPluginEnvVars,
     compilerOptions,
     jsConfig,
     resolvedBaseUrl,
@@ -407,6 +413,7 @@ export function getLoaderSWCOptions({
   optimizeServerReact,
   optimizePackageImports,
   swcPlugins,
+  swcPluginEnvVars,
   swcEnvOptions,
   compilerOptions,
   jsConfig,
@@ -438,6 +445,7 @@ export function getLoaderSWCOptions({
     NextConfig['experimental']
   >['optimizePackageImports']
   swcPlugins: ExperimentalConfig['swcPlugins']
+  swcPluginEnvVars?: ExperimentalConfig['swcPluginEnvVars']
   swcEnvOptions?: ExperimentalConfig['swcEnvOptions']
   compilerOptions: NextConfig['compiler']
   jsConfig: any
@@ -462,6 +470,7 @@ export function getLoaderSWCOptions({
     configDir,
     modularizeImports,
     swcPlugins,
+    swcPluginEnvVars,
     compilerOptions,
     jsConfig,
     // resolvedBaseUrl,
